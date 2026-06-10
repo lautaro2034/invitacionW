@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>¿Te anda WhatsApp?</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+
+        /* REEMPLAZAMOS LA IMAGEN BORROSA POR ESTA DE ALTA CALIDAD */
+        /* Esta URL es una imagen de stock de un campo de tulipanes a alta resolución. */
+        background-image: url("https://plus.unsplash.com/premium_photo-1671974489983-083171c0215e?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dHVsaXAlQzMlQTFufGVufDB8fDB8fHww");
+
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+
+        /* Mantenemos un degradado muy suave para que el texto siga siendo legible */
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1)),
+          url("https://plus.unsplash.com/premium_photo-1671974489983-083171c0215e?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dHVsaXAlQzMlQTFufGVufDB8fDB8fHww");
+      }
+
+      .container {
+        text-align: center;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 26px; /* Lo agrandamos un pelín */
+        font-weight: 800; /* Negro bien fuerte y grueso */
+        color: #000000; /* Negro absoluto */
+        margin-bottom: 40px;
+        letter-spacing: -0.5px;
+
+        /* El truco de la sombra blanca para que resalte un montón */
+        text-shadow:
+          2px 2px 4px rgba(255, 255, 255, 0.9),
+          -2px -2px 4px rgba(255, 255, 255, 0.9),
+          2px -2px 4px rgba(255, 255, 255, 0.9),
+          -2px 2px 4px rgba(255, 255, 255, 0.9);
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        height: 50px;
+        position: relative;
+      }
+
+      button {
+        padding: 12px 30px;
+        font-size: 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition:
+          background-color 0.2s,
+          transform 0.1s;
+      }
+
+      .btn-si {
+        background-color: #000;
+        color: #fff;
+      }
+
+      .btn-si:hover {
+        background-color: #222;
+      }
+
+      .btn-si,
+      .btn-no {
+        padding: 13px 44px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 12px;
+        border: 1.5px solid;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>¿Te anda bien WhatsApp?</h1>
+      <div class="buttons">
+        <button class="btn-si" id="btnSi">Sí</button>
+        <button class="btn-no" id="btnNo">No</button>
+      </div>
+    </div>
+
+    <script>
+      const btnNo = document.getElementById("btnNo");
+      const btnSi = document.getElementById("btnSi");
+
+      // REEMPLAZÁ ACÁ TU NÚMERO DE TELÉFONO (Con código de país, ej: 54911XXXXXXXX)
+      const TU_TELEFONO = "5491163327363";
+      const MENSAJE = encodeURIComponent(
+        "cuando vamos a ver Obsesión, tengo franco estos dias:",
+      );
+
+      // Función para mover el botón "No" a una posición aleatoria
+      function moverBotonNo() {
+        // Calculamos límites para que no se vaya totalmente de la pantalla visible
+        const padding = 50;
+        const maxX = window.innerWidth - btnNo.offsetWidth - padding;
+        const maxY = window.innerHeight - btnNo.offsetHeight - padding;
+
+        // Generar posiciones aleatorias
+        const randomX = Math.random() * maxX;
+        const randomY = Math.random() * maxY;
+
+        // Cambiar a fixed para que se mueva libre por toda la pantalla
+        btnNo.style.position = "fixed";
+        btnNo.style.left = `${randomX}px`;
+        btnNo.style.top = `${randomY}px`;
+      }
+
+      // Se escapa cuando pasan el mouse (PC)
+      btnNo.addEventListener("mouseenter", moverBotonNo);
+      // Se escapa cuando intentan tocarlo (Celular / Pantallas táctiles)
+      btnNo.addEventListener("touchstart", (e) => {
+        e.preventDefault(); // Evita que haga el click nativo
+        moverBotonNo();
+      });
+
+      // Acción al hacer click en el "Sí"
+      btnSi.addEventListener("click", () => {
+        window.location.href = `https://wa.me/${TU_TELEFONO}?text=${MENSAJE}`;
+      });
+    </script>
+  </body>
+</html>
